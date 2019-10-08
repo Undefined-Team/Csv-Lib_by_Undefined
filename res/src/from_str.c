@@ -2,13 +2,13 @@
 
 static ud_arr   *ud_csv_read_rec(ud_arr *str, char **floor_sep)
 {
-    if (!*floor_sep) return ;
+    if (!*floor_sep) return NULL;
     char *sep = *floor_sep;
     ud_arr *splitted = ud_str_split(str, sep);
     if (splitted->type_s == 0)
     {
         size_t len = splitted->len;
-        ud_arr **val = (val**)splitted->val;
+        ud_arr **val = (ud_arr**)splitted->val;
         ud_arr *new_val;
         ++floor_sep;
         while (len-- > 0)
