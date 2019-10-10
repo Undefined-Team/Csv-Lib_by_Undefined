@@ -6,12 +6,11 @@
 #include <ud_file.h>
 
 // Macro
-# define ud_csv_from_str(str, have_header, ...)     ud_csv_from_str_call(str, have_header, UD_ARGS_LEN(char*, __VA_ARGS__), __VA_ARGS__)
-
+# define ud_csv_read(path, have_header, ...)        ({ ud_arr *str = ud_file_read(path); ud_arr *csv = ud_csv_from_str(str, have_header, __VA_ARGS__); ud_arr_free(str); csv; })
+# define ud_csv_from_str(str, have_header, ...)     ({ ud_arr *parsed = ud_stra_rsplit(str, __VA_ARGS__); if (have_header && parsed->len > 0) ud_arr_rm_idx(parsed, 0, true); parsed; })
 
 // Structures
 
 // Prototypes
-ud_arr          *ud_csv_from_str_call(ud_arr *str, ud_bool have_header, size_t args_len, ...);
 
 #endif
