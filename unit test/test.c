@@ -10,7 +10,9 @@ int main(void)
 
     // ud_arr *parsed = ud_stra_split(csv_arr, "5");
     printf("before csv\n");
-    ud_arr *parsed = ud_csv_from_str(csv_arr, false, "\n", ",");
+    ud_arr *parsed = ud_csv_from_str(csv_arr, true, "\n", ",");
     ud_arr_print(parsed, char, "%c");
+    ud_arr_free(csv_arr);
+    ud_arr_free(parsed);
     return 0;
 }
