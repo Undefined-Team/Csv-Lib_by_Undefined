@@ -14,7 +14,7 @@ int main(void)
 
     // ud_arr *parsed = ud_csv_read("test.csv", false, "\n");
 
-    ud_arr_print(parsed, char, "%c");
+    ud_arr_print(parsed);
     ud_arr_free(parsed);
 
     printf("\n\n");
@@ -22,6 +22,9 @@ int main(void)
     printf("%zd %d\n", str->len, ((char*)str->val)[0]);
     ud_arr *splitted = ud_stra_split(str, ",");
     printf("%zd\n", splitted->len);
-    ud_arr_print(splitted, char, "%c");
+    ud_arr_print(splitted);
+    ud_arr_free(splitted);
+    // ud_arr_free(csv_arr);
+    // ud_arr_type_free();
     return 0;
 }
