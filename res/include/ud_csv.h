@@ -6,11 +6,23 @@
 #include <ud_file.h>
 
 // Macro
-# define ud_csv_read(path, have_header, ...)        ({ ud_arr *str = ud_file_read(path); ud_arr *csv = ud_csv_from_str(str, have_header, __VA_ARGS__); ud_arr_free(str); csv; })
-# define ud_csv_from_str(str, have_header, ...)     ({ ud_arr *parsed = ud_stra_vrsplit(str, __VA_ARGS__); if (have_header && parsed->len > 0) ud_arr_frm_idx(parsed, 0); parsed; })
+# define ud_csv_set_sep(...)                            ({ char **sep = ud_ptr_set(char*, __VA_ARGS__); (void)ud_csv_param_ctr(ud_csv_sep, sep); })
+# define ud_csv_set_trim(...)                           ({ char **trim = ud_ptr_set(char*, __VA_ARGS__); (void)ud_csv_param_ctr(ud_csv_trim, trim); })
+# define ud_csv_param_set()                             ud_csv_param_ctr(ud_csv_get, NULL)
+# define ud_csv_param_free()                            (void)ud_csv_param_ctr(ud_csv_free, NULL)
 
 // Structures
+typedef enum        {ud_csv_get,ud_csv_free,ud_csv_sep,ud_csv_trim} ud_csv_req;
+
+typedef struct      uds_csv_param {
+    char            **sep;
+    char            **trim;
+}                   ud_csv_param;
+
 
 // Prototypes
+ud_csv_param        ud_csv_param_ctr(ud_csv_req req, char **new_param);
+ud_arr              *ud_csv_from_str(ud_arr *str, ud_bool have_header);
+ud_arr              *ud_csv_read(char *path, ud_bool have_header);
 
 #endif
