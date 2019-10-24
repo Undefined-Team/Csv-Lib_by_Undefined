@@ -15,6 +15,12 @@ int main(void)
 
     csv = ud_csv_read("test.csv", false);
     ud_arr_print(csv);
+    ud_csv_write("test2.csv", csv);
     ud_arr_free(csv);
+
+    csv = ud_csv_read("test2.csv", false);
+    ud_arr_print(csv);
+    ud_arr_free(csv);
+
     return 0;
 }

@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "ud_csv.h": "c"
+        "ud_csv.h": "c",
+        "malloc.h": "c",
+        "stdlib.h": "c",
+        "corecrt_malloc.h": "c"
     }
 }
