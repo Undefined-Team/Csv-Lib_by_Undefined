@@ -11,7 +11,7 @@ ud_arr      *ud_csv_from_str(ud_arr *str, ud_bool have_header)
 
 ud_arr      *ud_csv_read(char *path, ud_bool have_header)
 {
-    ud_arr *str = ud_file_read(path);
+    ud_arr *str = ud_filea_read(path);
     ud_arr *csv = ud_csv_from_str(str, have_header);
     ud_arr_free(str);
     return csv;
