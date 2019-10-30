@@ -1,26 +1,17 @@
 #include <ud_csv.h>
 
-// # define test_change(macro) ({ #define TESTMAC TESTMAC ## macro # define TESTNRM #TESTMAC
-
 int main(void)
 {
     // Test csv from str
 
     // Test csv read
-    ud_arr *csv = ud_csv_read("test.csv", false);
-    ud_arr_print(csv);
-    ud_arr_free(csv);
-
+    char ***csv = ud_csv_read("test.csv", true);
     ud_csv_set_trim("cc", "ss");
-
-    csv = ud_csv_read("test.csv", false);
-    ud_arr_print(csv);
-    ud_csv_write("test2.csv", csv);
-    ud_arr_free(csv);
-
-    csv = ud_csv_read("test2.csv", false);
-    ud_arr_print(csv);
-    ud_arr_free(csv);
+    printf("after csv\n");
+    printf("%s\n", (*csv)[1]);
+    ud_csv_write("test3.csv", csv, "imaheader", "yes");
+    ud_ptr_free(csv, 2);
+    // printf("%s\n", csv[0][1]);
 
     return 0;
 }

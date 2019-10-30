@@ -12,6 +12,7 @@ ud_csv_param        ud_csv_param_ctr(ud_csv_req req, char **new_param)
     }
     if (req == ud_csv_sep)
     {
+        if (!ud_ptr_len(new_param)) ud_ut_error("Csv separator param need at least one separator");
         ud_ut_free(csv_param.sep);
         csv_param.sep = new_param;
     }

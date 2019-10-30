@@ -1,25 +1,27 @@
 #include "ud_csv.h"
 
-ud_arr  *ud_csv_to_str(ud_arr *csv)
+char  *ud_csv_to_str(void *csv)
 {
-    ud_csv_param csv_param = ud_csv_param_set();
-    ud_stra_trim(csv, csv_param.trim);
-    ud_arr *str = ud_stra_rjoin(csv, csv_param.sep);
+    ud_csv_param csv_param = ud_csv_param_get();
+    ud_str_rtrim(csv, ud_ptr_len(csv_param.sep) - 1, csv_param.trim);
+    char *str = ud_str_rjoin(csv, csv_param.sep);
     return str;
 }
 
-void    ud_csv_write_ctr(char *path, char *csv, char **headers)
+void    ud_csv_write_ctr(char *path, void *csv, char **headers)
 {
-    ud_arr *str = ud_csv_to_str(csv);
+    char *str = ud_csv_to_str(csv);
+    ud_file_clear(path);
     if (headers)
     {
-        ud_ptr_foreach(headers, elem, *elem = ud_str_ftrim(*elem);)
-        ud_arr *header = ud_stra_join(headers);
-        ud_arr *formatted_header = ud_csv_to_str(header);
-        ud_file_write_append(path, formatted_header);
-        ud_arr_free(header);
-        ud_arr_free(formatted_header);
+        ud_csv_param csv_param = ud_csv_param_get();
+        if (!*csv_param.sep) ud_ut_error("Headers param need csv param have at least one separator");
+        ud_str_rtrim(headers, 0, csv_param.trim);
+        char *joined = ud_str_fjoin(headers, *(csv_param.sep + 1) ? *(csv_param.sep + 1) : "");
+        ud_file_write_append(path, joined);
+        ud_file_write_append(path, *csv_param.sep);
+        ud_ut_free(joined);
     }
     ud_file_write_append(path, str);
-    ud_arr_free(str);
+    ud_ut_free(str);
 }
