@@ -28,6 +28,7 @@ void                *ud_csv_from_str(char *str, ud_bool remove_header);
 void                *ud_csv_read(char *path, ud_bool remove_header);
 
 char                *ud_csv_to_str(void *csv);
+void                ud_csv_write_header(char *path, char **headers);
 void                ud_csv_write_ctr(char *path, void *csv, char **headers);
 
 #endif
