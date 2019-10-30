@@ -11,16 +11,7 @@
 # define ud_csv_param_get()                             ud_csv_param_ctr(ud_csv_get, NULL)
 # define ud_csv_param_free()                            (void)ud_csv_param_ctr(ud_csv_free, NULL)
 
-# define ud_csv_write(path, csv, ...)  \
-({ \
-    char *base_headers[] = {__VA_ARGS__}; \
-    if (ud_ut_statica_len(base_headers))  \
-    { \
-        char **headers = ud_ut_sarray(char*,__VA_ARGS__, NULL); \
-        ud_csv_write_ctr(path, csv, headers); \
-    } \
-    else ud_csv_write_ctr(path, csv, NULL); \
-})
+# define ud_csv_write(path, ...)                        ({ void *headers[] = {__VA_ARGS__, NULL}; ud_csv_write_ctr(path, headers[0], (char**)(headers + 1)); })
 
 // Structures
 typedef enum        {ud_csv_get,ud_csv_free,ud_csv_sep,ud_csv_trim} ud_csv_req;

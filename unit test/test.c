@@ -9,7 +9,8 @@ int main(void)
     ud_csv_set_trim("cc", "ss");
     printf("after csv\n");
     printf("%s\n", (*csv)[1]);
-    ud_csv_write("test3.csv", csv, "imaheader", "yes");
+    ud_csv_write("test3.csv", csv);
+    // ud_csv_write("test3.csv", csv, "imaheader", "no");
     ud_ptr_free(csv, 2);
     // printf("%s\n", csv[0][1]);
 

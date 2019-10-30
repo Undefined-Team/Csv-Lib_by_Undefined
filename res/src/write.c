@@ -12,12 +12,14 @@ void    ud_csv_write_ctr(char *path, void *csv, char **headers)
 {
     char *str = ud_csv_to_str(csv);
     ud_file_clear(path);
-    if (headers)
+    if (headers && *headers)
     {
+        ud_ptr_foreach(headers, elem, *elem = ud_str_dup(*elem););
         ud_csv_param csv_param = ud_csv_param_get();
         if (!*csv_param.sep) ud_ut_error("Headers param need csv param have at least one separator");
         ud_str_rtrim(headers, 0, csv_param.trim);
-        char *joined = ud_str_fjoin(headers, *(csv_param.sep + 1) ? *(csv_param.sep + 1) : "");
+        char *joined = ud_str_join(headers, *(csv_param.sep + 1) ? *(csv_param.sep + 1) : "");
+        ud_ptr_foreach(headers, elem, ud_ut_free(*elem););
         ud_file_write_append(path, joined);
         ud_file_write_append(path, *csv_param.sep);
         ud_ut_free(joined);
